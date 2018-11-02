@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
     <script>
@@ -48,14 +52,56 @@
             margin: 10px;
             border: 1px solid #3498db;
         }
+        /* set modal outer background color */
+        .jquery-modal.blocker.current {
+            background: #f93e3e1a;
+        }
+        #check-result > br {
+            display: block;
+            margin: 0.6em 0;
+        }
     </style>
     <div class="title">
         <label for="editor">Editor</label>
+        <button onclick="checkHTML();">Check</button>
         <label for="viewer">Viewer</label>
     </div>
     <div class="main">
         <textarea name="editor" id="editor" onkeyup="refresh();" placeholder="Code Here"></textarea>
         <iframe id="viewer"></iframe>
+        <div id="modal1" class="modal">
+            <p id='check-result'></p>
+        </div>
     </div>
+    <script>
+    
+    // check of html-text in #viewer is currect,
+    // if not currect, show error message.
+    function checkHTML() {
+        let text = document.getElementById('editor').value;
+        jQuery.ajaxSetup({
+            headers: {
+                'Content-Type': ' text/html; charset=utf-8'
+            }
+        });
+        let message = '';
+        jQuery.post('https://validator.w3.org/nu/?out=gnu', 
+            text,
+            function (data) { // success
+                if (data.length != 0) {
+                    message = data;
+                }
+                else {
+                    message = 'ok';
+                }
+                console.log(message);
+                document.getElementById('check-result').innerText = message;
+                $("#modal1").modal({
+                    fadeDuration: 100
+                });
+            }
+        );
+    }
+    </script>
 </body>
 </html>
