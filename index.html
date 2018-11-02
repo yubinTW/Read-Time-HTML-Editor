@@ -66,9 +66,12 @@
             display: block;
             margin: 0.6em 0;
         }
+        .shine {
+            text-shadow: 1px 1px yellow;
+        }
     </style>
     <div class="title">
-        <label for="editor">Editor</label>
+        <label for="editor" id='editor-label'>Editor</label>
         <button class="btn btn-primary" onclick="checkHTML();">Check</button>
         <label for="viewer">Viewer</label>
     </div>
@@ -80,7 +83,13 @@
         </div>
     </div>
     <script>
-    
+    // if editor be focused, label will set text-shadow
+    document.getElementById('editor').addEventListener('focus', function () {
+        document.getElementById('editor-label').classList.add('shine');
+    });
+    document.getElementById('editor').addEventListener('blur', function () {
+        document.getElementById('editor-label').classList.remove('shine');
+    });
     // check of html-text in #viewer is currect,
     // if not currect, show error message.
     function checkHTML() {
