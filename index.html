@@ -16,13 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.11/sweetalert2.min.css">
 </head>
 <body>
-    <script>
-        function refresh() {
-            var textContent = document.getElementById('editor').value;
-            document.getElementById('viewer').srcdoc = textContent;
-        }
-        
-    </script>
     <style>
         * {
             padding: 0;
@@ -83,6 +76,10 @@
         </div>
     </div>
     <script>
+    function refresh() {
+        var textContent = document.getElementById('editor').value;
+        document.getElementById('viewer').srcdoc = textContent;
+    }
     // if editor be focused, label will set text-shadow
     document.getElementById('editor').addEventListener('focus', function () {
         document.getElementById('editor-label').classList.add('shine');
@@ -109,7 +106,7 @@
                 else {
                     message = 'ok';
                 }
-                console.log(message);
+                // console.log(message);
                 document.getElementById('check-result').innerText = message;
                 if (message !== 'ok') {
                     $("#modal1").modal({
@@ -122,10 +119,11 @@
                     'success'
                     )
                 }
-                
             }
         );
     }
     </script>
+    <script src="./lazy-person.js"></script>
+    <script src="./lazy-person-content.js"></script>
 </body>
 </html>
